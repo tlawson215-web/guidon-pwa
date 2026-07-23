@@ -7,16 +7,15 @@
   "background_color": "#102a43",
   "theme_color": "#c9a227",
   "description": "Trusted guidance for veterans and their families",
-  "icons": [
-    {
-      "src": "https://tlawson215-web.github.io/guidon-pwa/192x192lostpng.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "https://tlawson215-web.github.io/guidon-pwa/512x512%20Lostpng.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
-  ]
-}
+ "icons": [
+  {
+    "src": "https://tlawson215-web.github.io/guidon-pwa/GUIDON_Shield_192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  },
+  {
+    "src": "https://tlawson215-web.github.io/guidon-pwa/GUIDON_Shield_512.png",
+    "sizes": "512x512",
+    "type": "image/png"
+  }
+]
