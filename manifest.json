@@ -1,0 +1,28 @@
+{
+  "background_color": "#102a43",
+  "description": "Trusted guidance for veterans and their families",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "GUIDON",
+  "orientation": "any",
+  "scope": "/",
+  "short_name": "GUIDON",
+  "start_url": "/",
+  "theme_color": "#c9a227",
+  "icons": [
+    {
+      "src": "https://framerusercontent.com/images/W2LZugtEaj3HqrXsw7AyMAdBns.png",
+      "type": "image/png",
+      "sizes": "1024x1535",
+      "isSquare": false,
+      "isPng": true,
+      "isWebp": false,
+      "isJpg": false,
+      "width": 1024,
+      "is512x512": false,
+      "is256x256": false,
+      "is192x192": false
+    }
+  ],
+  "id": "/"
+}
