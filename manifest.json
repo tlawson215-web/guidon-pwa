@@ -1,21 +1,28 @@
 {
   "name": "GUIDON",
   "short_name": "GUIDON",
-  "id": "/",
-  "start_url": "/",
+  "id": "https://goguidon.com/",
+  "start_url": "https://goguidon.com/",
   "display": "standalone",
   "background_color": "#102a43",
   "theme_color": "#c9a227",
   "description": "Trusted guidance for veterans and their families",
- "icons": [
-  {
-    "src": "https://tlawson215-web.github.io/guidon-pwa/GUIDON_Shield_192.png",
-    "sizes": "192x192",
-    "type": "image/png"
-  },
-  {
-    "src": "https://tlawson215-web.github.io/guidon-pwa/GUIDON_Shield_512.png",
-    "sizes": "512x512",
-    "type": "image/png"
-  }
-]
+  "icons": [
+    {
+      "src": "guidon-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "guidon-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "guidon-icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
