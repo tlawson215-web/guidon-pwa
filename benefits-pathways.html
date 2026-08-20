@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<meta name="robots" content="noindex">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benefits Pathways</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #ffffff;
+            color: #1a1a2e;
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 48px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .pathway-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .pathway-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+            transform: translateY(-1px);
+            border-color: #d1d5db;
+        }
+
+        .pathway-card.active {
+            border-color: #c9a84c;
+            box-shadow: 0 4px 16px rgba(201, 168, 76, 0.1);
+        }
+
+        .pathway-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .pathway-number {
+            width: 40px;
+            height: 40px;
+            background: #0a1628;
+            color: #c9a84c;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+
+        .pathway-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #1a1a2e;
+            flex: 1;
+            letter-spacing: -0.01em;
+        }
+
+        .pathway-toggle {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: #6b7280;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .pathway-card.active .pathway-toggle {
+            transform: rotate(180deg);
+            background: #0a1628;
+            color: #c9a84c;
+        }
+
+        .pathway-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease, padding 0.3s ease;
+            opacity: 0;
+            padding-top: 0;
+        }
+
+        .pathway-card.active .pathway-content {
+            max-height: 4000px;
+            opacity: 1;
+            padding-top: 24px;
+        }
+
+        .step {
+            padding: 18px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .step:last-child {
+            border-bottom: none;
+        }
+
+        .step-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0a1628;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .step-title::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            background: #c9a84c;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            padding-left: 14px;
+            color: #4b5563;
+            font-size: 0.9rem;
+            line-height: 1.7;
+        }
+
+        .step-content p {
+            margin-bottom: 10px;
+        }
+
+        .step-content strong {
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+
+        .step-content ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 10px;
+        }
+
+        .step-content ul li {
+            padding-left: 18px;
+            position: relative;
+            margin-bottom: 6px;
+        }
+
+        .step-content ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #c9a84c;
+            font-weight: 500;
+            font-size: 0.8rem;
+        }
+
+        .step-content ol {
+            padding-left: 18px;
+            margin-bottom: 10px;
+        }
+
+        .step-content ol li {
+            margin-bottom: 8px;
+            padding-left: 4px;
+        }
+
+        .highlight-box {
+            background: #fefce8;
+            border-left: 3px solid #c9a84c;
+            padding: 12px 16px;
+            border-radius: 0 8px 8px 0;
+            margin: 12px 0;
+            font-size: 0.85rem;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 14px 0;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        th {
+            background: #0a1628;
+            color: #c9a84c;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 10px 14px;
+            border-bottom: 1px solid #f0f0f0;
+            color: #4b5563;
+            background: #fafafa;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:nth-child(even) td {
+            background: #f3f4f6;
+        }
+
+        td strong {
+            color: #1a1a2e;
+        }
+
+        .cta-section {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            color: #1a1a2e;
+            padding: 32px 28px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            color: #0a1628;
+            font-weight: 600;
+        }
+
+        .cta-section p {
+            color: #6b7280;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .cta-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #0a1628;
+        }
+
+        .back-link::before {
+            content: "←";
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 32px 16px;
+            }
+
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .pathway-card {
+                padding: 22px 20px;
+            }
+
+            .pathway-title {
+                font-size: 1rem;
+            }
+
+            .pathway-number {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+
+            .table-container {
+                font-size: 0.78rem;
+            }
+
+            th, td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="container">
+        <a href="https://goguidon.com/" class="back-link">Back to Knowledge Base</a>
+
+        <div class="header">
+            <h1>Benefits Pathways</h1>
+            <p>Step-by-step guides for the most common veteran benefit scenarios. Click any pathway to expand and see the full guide.</p>
+        </div>
+
+        <!-- PATHWAY 1 -->
+        <div class="pathway-card" onclick="togglePathway(this)">
+            <div class="pathway-header">
+                <div class="pathway-number">1</div>
+                <div class="pathway-title">I Want to File a Disability Claim</div>
+                <div class="pathway-toggle">▼</div>
+            </div>
+            <div class="pathway-content">
+                <div class="step">
+                    <div class="step-title">Step 1: Do I qualify?</div>
+                    <div class="step-content">
+                        <p>You need three things for service connection:</p>
+                        <ul>
+                            <li><strong>Current diagnosis</strong> — a medical professional has diagnosed your condition</li>
+                            <li><strong>In-service event or injury</strong> — something happened during your military service</li>
+                            <li><strong>Medical nexus</strong> — a link between your current condition and your service</li>
+                        </ul>
+                        <p>Some conditions are <strong>presumptive</strong> — the VA automatically assumes service connection if you served in specific locations or times. Examples include Agent Orange exposure in Vietnam, burn pit exposure in Southwest Asia, and Gulf War illnesses.</p>
+                        <div class="highlight-box">Check your service dates and locations against the VA's presumptive condition list.</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 2: What evidence do I need?</div>
+                    <div class="step-content">
+                        <p>Gather these documents before you file:</p>
+                        <ul>
+                            <li><strong>Service treatment records</strong> — medical care you received while in service</li>
+                            <li><strong>Current medical records</strong> — ongoing treatment for your condition</li>
+                            <li><strong>Buddy statements</strong> — written accounts from witnesses who saw your injury or symptoms</li>
+                            <li><strong>Nexus letter</strong> — a medical opinion linking your condition to service (optional but helpful for non-presumptive claims)</li>
+                        </ul>
+                        <div class="highlight-box">Start with your service records. If they were lost or destroyed, request reconstruction from the National Archives.</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 3: Should I use a VSO?</div>
+                    <div class="step-content">
+                        <p><strong>Yes.</strong> Accredited Veterans Service Organizations provide free assistance. They cannot charge you for help with VA claims.</p>
+                        <p><strong>Accredited VSOs include:</strong></p>
+                        <ul>
+                            <li>Disabled American Veterans (DAV)</li>
+                            <li>Veterans of Foreign Wars (VFW)</li>
+                            <li>American Legion</li>
+                            <li>County Veterans Service Officers</li>
+                        </ul>
+                        <p>They help gather evidence, complete forms, spot issues, and track your claim status. There is no downside to using a VSO.</p>
+                        <div class="highlight-box">Find your nearest VSO at VA.gov or through your county veterans office.</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 4: How do I start?</div>
+                    <div class="step-content">
+                        <ol>
+                            <li><strong>Submit an Intent to File</strong> on VA.gov to lock in your effective date. You have one year to complete your full claim.</li>
+                            <li><strong>File your claim</strong> online at VA.gov, by mail, or in person at a VA regional office.</li>
+                            <li><strong>Upload or mail your evidence</strong> with your claim.</li>
+                        </ol>
+                        <div class="highlight-box">Your effective date determines when your back pay starts. The Intent to File protects that date while you gather evidence.</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 5: What happens after I file?</div>
+                    <div class="step-content">
+                        <p>Your claim moves through 8 phases:</p>
+                        <ol>
+                            <li><strong>Claim Received</strong> — VA confirms they have your submission</li>
+                            <li><strong>Initial Review</strong> — VA assigns a reviewer</li>
+                            <li><strong>Evidence Gathering</strong> — VA requests records, schedules exams</li>
+                            <li><strong>Evidence Review</strong> — VA examines all submitted evidence</li>
+                            <li><strong>Rating</strong> — VA assigns a disability percentage</li>
+                            <li><strong>Decision Review</strong> — a senior reviewer checks the rating</li>
+                            <li><strong>Preparation for Notification</strong> — VA prepares your decision letter</li>
+                            <li><strong>Complete</strong> — decision mailed and posted online</li>
+                        </ol>
+                        <p><strong>Expect a C&P exam</strong> (Compensation & Pension exam). A VA or contracted doctor will examine you and review your records.</p>
+                        <p><strong>Typical timeline:</strong> 3 to 6 months from filing to decision.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 6: What if I'm denied?</div>
+                    <div class="step-content">
+                        <p>You have three appeal options, and you can choose only one path at a time:</p>
+                        <div class="table-container">
+                            <table>
+                                <tr>
+                                    <th>Option</th>
+                                    <th>What It Does</th>
+                                    <th>Best For</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Higher-Level Review (HLR)</strong></td>
+                                    <td>A senior reviewer re-examines your same evidence</td>
+                                    <td>You believe the original reviewer made a mistake</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Supplemental Claim</strong></td>
+                                    <td>Submit new and relevant evidence not in your original file</td>
+                                    <td>You have new medical records, buddy statements, or a nexus letter</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Board Appeal</strong></td>
+                                    <td>Request a hearing before a Veterans Law Judge</td>
+                                    <td>Complex cases, or you want to present testimony</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p><strong>You have one year from your decision date to file an appeal.</strong></p>
+                        <div class="highlight-box">Start with a VSO to determine which path fits your situation.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PATHWAY 2 -->
+        <div class="pathway-card" onclick="togglePathway(this)">
+            <div class="pathway-header">
+                <div class="pathway-number">2</div>
+                <div class="pathway-title">I Need Healthcare from the VA</div>
+                <div class="pathway-toggle">▼</div>
+            </div>
+            <div class="pathway-content">
+                <div class="step">
+                    <div class="step-title">Step 1: Do I qualify for VA health care?</div>
+                    <div class="step-content">
+                        <p>Generally, you qualify if:</p>
+                        <ul>
+                            <li>You served <strong>24 months or more</strong> of active duty, <strong>or</strong></li>
+                            <li>You were discharged for a <strong>service-connected disability</strong>, <strong>or</strong></li>
+                            <li>You served in specific campaigns or locations with <strong>presumptive conditions</strong></li>
+                        </ul>
+                        <p>VA assigns you to a <strong>priority group</strong> (1-8) based on your service-connected disability rating, income, and other factors. Priority group determines your copays and access.</p>
+                        <div class="highlight-box">Priority Group 1 (service-connected 50% or higher) has no copays.</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 2: What documents do I need?</div>
+                    <div class="step-content">
+                        <ul>
+                            <li><strong>DD-214</strong> — Certificate of Release or Discharge</li>
+                            <li><strong>Financial information</strong> — income and household size for priority group assignment</li>
+                            <li><strong>Insurance information</strong> — if you have private health insurance</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 3: How do I enroll?</div>
+                    <div class="step-content">
+                        <p>Apply in one of four ways:</p>
+                        <ol>
+                            <li><strong>Online:</strong> VA.gov/health-care</li>
+                            <li><strong>Phone:</strong> 1-877-222-VETS (8387)</li>
+                            <li><strong>In person:</strong> Any VA medical center or clinic</li>
+                            <li><strong>By mail:</strong> VA Form 10-10EZ</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 4: What happens after I apply?</div>
+                    <div class="step-content">
+                        <ul>
+                            <li>You'll receive a <strong>Veterans Health Identification Card (VHIC)</strong> in the mail</li>
+                            <li>Schedule your <strong>first primary care appointment</strong></li>
+                            <li>Access <strong>urgent care, mental health, pharmacy, specialty services, and dental</strong> (if eligible)</li>
+                        </ul>
+                        <div class="highlight-box">Download the VA Health App to manage appointments, prescriptions, and messages with your care team.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PATHWAY 3 -->
+        <div class="pathway-card" onclick="togglePathway(this)">
+            <div class="pathway-header">
+                <div class="pathway-number">3</div>
+                <div class="pathway-title">I Want to Use My GI Bill</div>
+                <div class="pathway-toggle">▼</div>
+            </div>
+            <div class="pathway-content">
+                <div class="step">
+                    <div class="step-title">Step 1: Which GI Bill do I have?</div>
+                    <div class="step-content">
+                        <div class="table-container">
+                            <table>
+                                <tr>
+                                    <th>GI Bill</th>
+                                    <th>Eligibility</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Post-9/11 GI Bill</strong></td>
+                                    <td>Served at least 90 days after September 10, 2001</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Montgomery GI Bill — Active Duty</strong></td>
+                                    <td>Paid the $1,200 buy-in during service</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Montgomery GI Bill — Selected Reserve</strong></td>
+                                    <td>Member of the Selected Reserve</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p>Most veterans today use the <strong>Post-9/11 GI Bill</strong>.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 2: How do I apply?</div>
+                    <div class="step-content">
+                        <ol>
+                            <li>Go to <strong>VA.gov/education</strong></li>
+                            <li>Complete the application for your GI Bill program</li>
+                            <li>Receive your <strong>Certificate of Eligibility (COE)</strong> by mail</li>
+                        </ol>
+                        <p>Your COE shows:</p>
+                        <ul>
+                            <li>How many months of benefits you have</li>
+                            <li>Your percentage of eligibility (based on length of service)</li>
+                            <li>Your expiration date</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 3: How do I use it?</div>
+                    <div class="step-content">
+                        <ol>
+                            <li><strong>Choose a VA-approved school or program</strong> — check the WEAMS database on VA.gov</li>
+                            <li><strong>Provide your COE</strong> to the school's certifying official</li>
+                            <li><strong>The VA pays tuition directly</strong> to the school</li>
+                            <li><strong>You receive Monthly Housing Allowance (MHA)</strong> based on the school's zip code</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 4: How long do I have?</div>
+                    <div class="step-content">
+                        <ul>
+                            <li><strong>Post-9/11 GI Bill:</strong> 36 months of full-time benefits. Expires 15 years after your last discharge (unless you qualify for the Forever GI Bill extension).</li>
+                            <li><strong>MGIB-Active Duty:</strong> 36 months. Expires 10 years after discharge.</li>
+                        </ul>
+                        <div class="highlight-box">You can use benefits for college, trade schools, apprenticeships, flight training, and some certification programs.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PATHWAY 4 -->
+        <div class="pathway-card" onclick="togglePathway(this)">
+            <div class="pathway-header">
+                <div class="pathway-number">4</div>
+                <div class="pathway-title">I Need a VA Home Loan</div>
+                <div class="pathway-toggle">▼</div>
+            </div>
+            <div class="pathway-content">
+                <div class="step">
+                    <div class="step-title">Step 1: Do I qualify?</div>
+                    <div class="step-content">
+                        <p>You need:</p>
+                        <ul>
+                            <li><strong>Satisfactory credit</strong> and <strong>sufficient income</strong></li>
+                            <li>A valid <strong>Certificate of Eligibility (COE)</strong></li>
+                            <li><strong>Intent to occupy</strong> the home as your primary residence</li>
+                        </ul>
+                        <p>Service requirements vary by era (WWII, post-Vietnam, post-9/11). Most veterans who served 90 days during wartime or 181 days during peacetime qualify.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 2: How do I get my COE?</div>
+                    <div class="step-content">
+                        <p>Request it three ways:</p>
+                        <ol>
+                            <li><strong>Online:</strong> VA.gov/housing</li>
+                            <li><strong>Through your lender</strong> — most VA-approved lenders can pull it electronically</li>
+                            <li><strong>By mail:</strong> VA Form 26-1880</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 3: Find a VA-approved lender</div>
+                    <div class="step-content">
+                        <ul>
+                            <li>The VA <strong>does not lend money</strong>. It <strong>guarantees a portion of the loan</strong> to the lender.</li>
+                            <li>Shop multiple VA-approved lenders for the best rates and terms.</li>
+                            <li>Compare loan origination fees, interest rates, and closing costs.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 4: Close on your home</div>
+                    <div class="step-content">
+                        <p>VA loan advantages:</p>
+                        <ul>
+                            <li><strong>No down payment required</strong> (in most cases)</li>
+                            <li><strong>No private mortgage insurance (PMI)</strong></li>
+                            <li><strong>Competitive interest rates</strong></li>
+                            <li><strong>Funding fee</strong> applies unless you have service-connected disability compensation</li>
+                        </ul>
+                        <div class="highlight-box">If you have a 10% or higher service-connected rating, the funding fee is waived.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PATHWAY 5 -->
+        <div class="pathway-card" onclick="togglePathway(this)">
+            <div class="pathway-header">
+                <div class="pathway-number">5</div>
+                <div class="pathway-title">I Need to Update My Discharge Status</div>
+                <div class="pathway-toggle">▼</div>
+            </div>
+            <div class="pathway-content">
+                <div class="step">
+                    <div class="step-title">Step 1: Why update?</div>
+                    <div class="step-content">
+                        <p>A less-than-honorable discharge can block access to:</p>
+                        <ul>
+                            <li>VA disability compensation</li>
+                            <li>VA health care</li>
+                            <li>GI Bill education benefits</li>
+                            <li>Federal employment preferences</li>
+                        </ul>
+                        <p>If your discharge was related to <strong>PTSD, TBI, sexual assault, or mental health conditions</strong>, you may have a strong case for upgrade.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 2: Which board do I apply to?</div>
+                    <div class="step-content">
+                        <div class="table-container">
+                            <table>
+                                <tr>
+                                    <th>Board</th>
+                                    <th>Purpose</th>
+                                    <th>Who Applies</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Discharge Review Board (DRB)</strong></td>
+                                    <td>Errors or inequities in discharge characterization</td>
+                                    <td>Most veterans with less-than-honorable discharges</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Board for Correction of Military Records (BCMR)</strong></td>
+                                    <td>Administrative errors in records</td>
+                                    <td>Veterans with record errors affecting benefits</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>VA Character of Discharge Review</strong></td>
+                                    <td>Determines VA benefit eligibility regardless of discharge status</td>
+                                    <td>Veterans denied VA benefits due to discharge</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 3: What evidence do I need?</div>
+                    <div class="step-content">
+                        <ul>
+                            <li>Service records showing the circumstances of your discharge</li>
+                            <li>Medical records (military and civilian) documenting your condition</li>
+                            <li>Statements from fellow service members</li>
+                            <li>Any documentation linking your discharge to PTSD, TBI, sexual assault, or mental health</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-title">Step 4: How long does it take?</div>
+                    <div class="step-content">
+                        <ul>
+                            <li><strong>DRB and BCMR reviews:</strong> 12 to 18 months</li>
+                            <li><strong>VA Character of Discharge review:</strong> 6 to 12 months</li>
+                        </ul>
+                        <div class="highlight-box">Start with a VSO. They can help you determine which board to approach and build the strongest case.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Next Steps</h2>
+            <p>Pick one pathway and start with Step 1. You don't need to complete all five at once.</p>
+            <p>Most veterans begin with Pathway 1 (disability claim) or Pathway 2 (health care enrollment).</p>
+            <p>If you're unsure where to start, contact a VSO. They'll assess your situation and point you to the right pathway.</p>
+        </div>
+    </div>
+
+    <script>
+        function togglePathway(card) {
+            document.querySelectorAll('.pathway-card').forEach(function(c) {
+                if (c !== card) {
+                    c.classList.remove('active');
+                }
+            });
+            card.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
